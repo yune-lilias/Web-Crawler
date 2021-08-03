@@ -76,7 +76,10 @@ def get_request_headers2():
 def main():
    import os
    import shutil
-
+   
+   #some number in url 
+   #for example, if url is xxx.com/8765/ to  xxx.com/9999/
+   #then num0 is 9999 (largest number), tmpn = 9999-8765
    # num0 =
           
    while tmpn<1000:
@@ -89,9 +92,14 @@ def main():
      html = requests.get(url,headers = header)
      html.encoding = 'utf-8'
      data = BeautifulSoup(html.text,'lxml')
-     imgList = data.find_all('img',class_='zoom')
+	
+	#class: class of images
+	
+     imgList = data.find_all('img',class_='___')
      if(bool(imgList)):
-      str1 = 'D:\\imag2\\'
+		
+		#str1: download dir
+      str1 = 
       x=0
       title0 = str(data.find_all(class_='ts'))
       title = title0[title0.find('>')+1:title0.rfind('<')]
@@ -99,18 +107,19 @@ def main():
       rstr = r"[\/\\\:\*\?\"\<\>\|]" 
       title = re.sub(rstr, "_", title)  
       path1 = str1 + title
-      sea = '\[[0-9]+P\]$'
+      
+
       print(path1)
-      if((not os.path.exists(path1)) and (bool(re.search(sea,title)) )): 
+      if((not os.path.exists(path1)) ): 
            try:
              os.mkdir(path1)
            except:
               print('errorr')
       #print(imgList)
       for i in imgList:
-             print('downloading',i['file'], end='\r')
+             print('downloading',i['src'], end='\r')
              #print('downloading',str(x), end='\r')
-             html1 = requests.get(i['file'],headers = header,stream = True)
+             html1 = requests.get(i['src'],headers = header,stream = True)
              str2 = path1 + '\\' + str(x) + '.jpg'
              open(str2,'wb').write(html1.content)
              x+=1
